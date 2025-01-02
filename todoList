@@ -1,5 +1,5 @@
 package todolist;
-import java.util.Scanner;
+import java.util.*;
 public class TodoList {
 
     public static void main(String[] args) {
