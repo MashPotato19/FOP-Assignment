@@ -1,0 +1,31 @@
+package todolist;
+import java.util.Scanner;
+public class TodoList {
+
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        String option;
+        
+    do{
+        System.out.println("Welcome to To-Do");
+        System.out.println("\nChoose an action:");
+        System.out.println("1. Create a new task");
+        System.out.println("2. Complete a task");
+        System.out.println("3. Delete a task");
+        System.out.println("4. Sort all tasks");
+        System.out.println("5. Search tasks");
+        System.out.println("6. Add a recurring task");
+        System.out.println("7. Set task dependency");
+        System.out.println("8. Edit a task");
+        System.out.println("9. View all tasks");
+        option = input.nextLine();
+        
+        if(option.equals("1")){
+            
+        }
+        
+
+    }
+    
+}
+}
