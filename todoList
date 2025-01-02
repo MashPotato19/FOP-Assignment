@@ -3,6 +3,7 @@ import java.util.*;
 public class TodoList {
 
     public static void main(String[] args) {
+        ArrayList<String> list = new ArrayList<>();
         Scanner input = new Scanner(System.in);
         String option;
         
@@ -37,7 +38,7 @@ public class TodoList {
             System.out.println("Priority level (Low, Medium, High): ");
             String level = input.nextLine();
             
-            System.out.println("Task " + title + " added successfully!");
+            list.add("Task " + title + " added successfully!");
         }
 
         else if(option.equals("2")){
