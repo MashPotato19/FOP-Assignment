@@ -109,7 +109,7 @@ public class TodoList {
                     continue;
             }
 
-            selectionSort(tasks, sortBy, ascending);
+            selectionSort(list, sortBy, ascending);
         }
 
         else if(option.equals("5")){
