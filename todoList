@@ -55,8 +55,43 @@ public class TodoList {
             System.out.println("2. Due date descending");
             System.out.println("3. Priority high to low");
             System.out.println("4. Priority low to high");
-            System.out.print("Enter ypur choice (1-4) : ");
-            
+            System.out.print("Enter your choice (1-4) : ");
+            int choice = Integer.parseInt(scanner.nextLine());
+
+            String sortBy = "";
+            boolean ascending = true;
+
+            switch (choice) {
+                case 1 : 
+                    sortBy = "date";
+                    ascending = true;
+                    System.out.println("\nTasks sorted by Due Date in Ascending order");
+                    break;
+
+                case 2 :
+                    sortBy = "date";
+                    ascending = false;
+                    System.out.println("\nTasks sorted by Due Date in Descending order");
+                    break;
+
+                case 3 :
+                    sortBy = "level";
+                    ascending = true;
+                    System.out.println("\nTasks sorted by Priority from High to Low");
+                    break;
+
+                case 4 :
+                    sortBy = "level";
+                    ascending = false;
+                    System.out.println("\nTasks sorted by Priority from Low to High");
+                    break;
+
+                default :
+                    System.out.println("Invalid choice. Returning to main menu...");
+                    continue;
+            }
+
+            selectionSort(tasks, sortBy, ascending);
         }
 
         else if(option.equals("5")){
