@@ -2,6 +2,24 @@ package todolist;
 import java.util.*;
 public class TodoList {
 
+    public static void selectionSort(ArrayList<String> list, String sortBy, boolean ascending) {
+        int n = list.size();
+
+        for(int i = 0; i < n-1; i++) {
+            int selectedIndex = i;
+
+            for(int j = i + 1; j < n; j++) {
+                if(compareTasks(list.get(j), list.get(selectedIndex), sortBy, ascending)) {
+                    selectedIndex = j
+                }
+            }
+
+            if(selectedIndex != i) {
+                Collections.swap(list, i, selectedIndex);
+            }
+        }
+    }
+
     public static void main(String[] args) {
         ArrayList<String> list = new ArrayList<>();
         Scanner input = new Scanner(System.in);
