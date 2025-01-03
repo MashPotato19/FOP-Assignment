@@ -50,6 +50,12 @@ public class TodoList {
         }
 
         else if(option.equals("4")){
+            System.out.println("\nChoose sorting method :");
+            System.out.println("1. Due date ascending");
+            System.out.println("2. Due date descending");
+            System.out.println("3. Priority high to low");
+            System.out.println("4. Priority low to high");
+            System.out.print("Enter ypur choice (1-4) : ");
             
         }
 
