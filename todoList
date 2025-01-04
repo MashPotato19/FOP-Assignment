@@ -110,7 +110,20 @@ public class TodoList {
             }
 
             else if(option.equals("3")) {
-                // Delete logic placeholder
+                System.out.println("\nCurrent Tasks : ");
+                for(int i = 0; i < list.size(); i++) {
+                    System.out.println((i + 1) + ". " + list.get(i));
+                }
+                System.out.print("Enter the task number you want to delete : ");
+                int delete = Integer.parseInt(input.nextLine()) - 1;
+
+                if(delete >= 0 && delete < list.size()) {
+                    String removedTask = list.remove(delete);
+                    System.out.println("Task \" " + removedTask + "\" deleted successfully !");
+                } else {
+                    System.out.println("Invalid number. Returning to menu...");
+                }
+                break;
             }
 
             else if(option.equals("4")) {
@@ -140,13 +153,13 @@ public class TodoList {
 
                     case 3 :
                         sortBy = "level";
-                        ascending = true;
+                        ascending = false;
                         System.out.println("\nTasks sorted by Priority from High to Low");
                         break;
 
                     case 4 :
                         sortBy = "level";
-                        ascending = false;
+                        ascending = true;
                         System.out.println("\nTasks sorted by Priority from Low to High");
                         break;
 
