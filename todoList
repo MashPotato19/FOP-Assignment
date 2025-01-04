@@ -27,8 +27,24 @@ public class TodoList {
         String value1 = sortBy.equals("date") ? task1Parts[2] : task1Parts[4];
         String value2 = sortBy.equals("date") ? task2Parts[2] : task2Parts[4];
 
+        int comparison;
+        if(sortBy.equals("level")) {
+            comparison = Integer.compare(getPriorityValue(value1), getPriorityValue(value2));
+        } else {
         int comparison = value1.compareTo(value2);
+        }
         return ascending ? comparison < 0 : comparison > 0;
+    }
+
+    public static int getPriorityValue(String level) {
+        switch(level.trim().toLowerCase()) {
+            case "high" :
+                return 3;
+            case "medium" :
+                return 2;
+            case "low" :
+                return 1;
+        }
     }
 
     public static void main(String[] args) {
