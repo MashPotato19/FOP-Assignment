@@ -29,9 +29,11 @@ public class TodoList {
 
         int comparison;
         if(sortBy.equals("level")) {
-            comparison = Integer.compare(getPriorityValue(value1), getPriorityValue(value2));
+            int priority1 = getPriorityValue(value1);
+            int priority2 = getPriorityValue(value2);
+            comparison = priority1.compareTo(priority2);
         } else {
-        int comparison = value1.compareTo(value2);
+            comparison = value1.compareTo(value2);
         }
         return ascending ? comparison < 0 : comparison > 0;
     }
