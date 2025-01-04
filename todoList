@@ -10,7 +10,7 @@ public class TodoList {
 
             for(int j = i + 1; j < n; j++) {
                 if(compareTasks(list.get(j), list.get(selectedIndex), sortBy, ascending)) {
-                    selectedIndex = j
+                    selectedIndex = j;
                 }
             }
 
@@ -20,98 +20,123 @@ public class TodoList {
         }
     }
 
+    public static boolean compareTasks(String task1, String task2, String sortBy, boolean ascending) {
+        String[] task1Parts = task1.split(" - ");
+        String[] task2Parts = task2.split(" - ");
+
+        String value1 = sortBy.equals("date") ? task1Parts[2] : task1Parts[4];
+        String value2 = sortBy.equals("date") ? task2Parts[2] : task2Parts[4];
+
+        int comparison = value1.compareTo(value2);
+        return ascending ? comparison < 0 : comparison > 0;
+    }
+
     public static void main(String[] args) {
         ArrayList<String> list = new ArrayList<>();
         Scanner input = new Scanner(System.in);
         String option;
         
-    do{
-        System.out.println("Welcome to To-Do");
-        System.out.println("\nChoose an action:");
-        System.out.println("1. Create a new task");
-        System.out.println("2. Complete a task");
-        System.out.println("3. Delete a task");
-        System.out.println("4. Sort all tasks");
-        System.out.println("5. Search tasks");
-        System.out.println("6. Add a recurring task");
-        System.out.println("7. Set task dependency");
-        System.out.println("8. Edit a task");
-        System.out.println("9. View all tasks");
-        System.out.println("\nChoice of action: ");
-        option = input.nextLine();
-        
-        if(option.equals("1")){
-            System.out.println("Enter task title: "); 
-            String title = input.nextLine();
+        do {
+            System.out.println("Welcome to To-Do");
+            System.out.println("\nChoose an action:");
+            System.out.println("1. Create a new task");
+            System.out.println("2. Complete a task");
+            System.out.println("3. Delete a task");
+            System.out.println("4. Sort all tasks");
+            System.out.println("5. Search tasks");
+            System.out.println("6. Add a recurring task");
+            System.out.println("7. Set task dependency");
+            System.out.println("8. Edit a task");
+            System.out.println("9. View all tasks");
+            System.out.println("\nChoice of action: ");
+            option = input.nextLine();
             
-            System.out.println("Enter task description: ");
-            String description = input.nextLine();
-            
-            System.out.println("Enter due date (YYYY-MM-DD): ");
-            String date = input.nextLine();
-            
-            System.out.println("Enter task category (Homework, Personal, Work): ");
-            String category = input.nextLine();
-            
-            System.out.println("Priority level (Low, Medium, High): ");
-            String level = input.nextLine();
-            
-            list.add("Task " + title + " added successfully!");
-        }
-
-        else if(option.equals("2")){
-            
-        }
-
-        else if(option.equals("3")){
-            
-        }
-
-        else if(option.equals("4")){
-            System.out.println("\nChoose sorting method :");
-            System.out.println("1. Due date ascending");
-            System.out.println("2. Due date descending");
-            System.out.println("3. Priority high to low");
-            System.out.println("4. Priority low to high");
-            System.out.print("Enter your choice (1-4) : ");
-            int choice = Integer.parseInt(scanner.nextLine());
-
-            String sortBy = "";
-            boolean ascending = true;
-
-            switch (choice) {
-                case 1 : 
-                    sortBy = "date";
-                    ascending = true;
-                    System.out.println("\nTasks sorted by Due Date in Ascending order");
-                    break;
-
-                case 2 :
-                    sortBy = "date";
-                    ascending = false;
-                    System.out.println("\nTasks sorted by Due Date in Descending order");
-                    break;
-
-                case 3 :
-                    sortBy = "level";
-                    ascending = true;
-                    System.out.println("\nTasks sorted by Priority from High to Low");
-                    break;
-
-                case 4 :
-                    sortBy = "level";
-                    ascending = false;
-                    System.out.println("\nTasks sorted by Priority from Low to High");
-                    break;
-
-                default :
-                    System.out.println("Invalid choice. Returning to main menu...");
-                    continue;
+            if(option.equals("1")) {
+                System.out.println("Enter task title: "); 
+                String title = input.nextLine();
+                
+                System.out.println("Enter task description: ");
+                String description = input.nextLine();
+                
+                System.out.println("Enter due date (YYYY-MM-DD): ");
+                String date = input.nextLine();
+                
+                System.out.println("Enter task category (Homework, Personal, Work): ");
+                String category = input.nextLine();
+                
+                System.out.println("Priority level (Low, Medium, High): ");
+                String level = input.nextLine();
+                
+                list.add("[ ] " + title + " - " + description + " - " + date + " - " + category + " - " + level);
+                System.out.println("Task added successfully!");
             }
 
-            selectionSort(list, sortBy, ascending);
-        }
+            else if(option.equals("2")) {
+                System.out.println("Enter the title of the task to mark as complete: ");
+                String title = input.nextLine();
+                boolean found = false;
 
+                for(int i = 0; i < list.size(); i++) {
+                    if(list.get(i).contains("[ ]") && list.get(i).contains(title)) {
+                        list.set(i, list.get(i).replace("[ ]", "[X]"));
+                        System.out.println("Task marked as complete!");
+                        found = true;
+                        break;
+                    }
+                }
+                if(!found) {
+                    System.out.println("Task not found or already completed.");
+                }
+            }
+
+            else if(option.equals("3")) {
+                // Delete logic placeholder
+            }
+
+            else if(option.equals("4")) {
+                System.out.println("\nChoose sorting method :");
+                System.out.println("1. Due date ascending");
+                System.out.println("2. Due date descending");
+                System.out.println("3. Priority high to low");
+                System.out.println("4. Priority low to high");
+                System.out.print("Enter your choice (1-4) : ");
+                int choice = Integer.parseInt(input.nextLine());
+
+                String sortBy = "";
+                boolean ascending = true;
+
+                switch (choice) {
+                    case 1 : 
+                        sortBy = "date";
+                        ascending = true;
+                        System.out.println("\nTasks sorted by Due Date in Ascending order");
+                        break;
+
+                    case 2 :
+                        sortBy = "date";
+                        ascending = false;
+                        System.out.println("\nTasks sorted by Due Date in Descending order");
+                        break;
+
+                    case 3 :
+                        sortBy = "level";
+                        ascending = true;
+                        System.out.println("\nTasks sorted by Priority from High to Low");
+                        break;
+
+                    case 4 :
+                        sortBy = "level";
+                        ascending = false;
+                        System.out.println("\nTasks sorted by Priority from Low to High");
+                        break;
+
+                    default :
+                        System.out.println("Invalid choice. Returning to main menu...");
+                        continue;
+                }
+
+                selectionSort(list, sortBy, ascending);
+            }
         else if(option.equals("5")){
             
         }
@@ -132,7 +157,7 @@ public class TodoList {
             
         }
 
-    } while (!option.equals("0"));
-      input.close();
-}
+        } while (!option.equals("0"));
+        input.close();
+    }
 }
