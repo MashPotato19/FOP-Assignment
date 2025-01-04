@@ -170,6 +170,7 @@ public class TodoList {
 
                 selectionSort(list, sortBy, ascending);
             }
+
         else if(option.equals("5")){
             
         }
