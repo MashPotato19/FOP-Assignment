@@ -15,7 +15,9 @@ public class TodoList {
             }
 
             if(selectedIndex != i) {
-                Collections.swap(list, i, selectedIndex);
+                String temp = list.get(i);
+                list.set(i, list.get(selectedIndex));
+                list.set(selectedIndex, temp);
             }
         }
     }
