@@ -80,6 +80,7 @@ public class TodoList {
             System.out.println("7. Set task dependency");
             System.out.println("8. Edit a task");
             System.out.println("9. View all tasks");
+            System.out.println("10. Show Data Analytics");
             System.out.println("\nChoice of action: ");
             option = input.nextLine();
             
@@ -206,6 +207,11 @@ public class TodoList {
             
         }
 
+        else if(option.equals("10")){
+            DataAnalytics.showAnalytics(list);
+                    break;
+        }
+        
         } while (!option.equals("0"));
         input.close();
     }
