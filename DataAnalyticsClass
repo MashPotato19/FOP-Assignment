@@ -1,0 +1,47 @@
+package todolist;
+
+import java.util.ArrayList;
+
+public class DataAnalytics {
+
+    public static void showAnalytics(ArrayList<String> list) {
+        int totalTasks = list.size(); // Total number of tasks
+        int completedTasks = 0; // Counter for completed tasks
+        int pendingTasks = 0; // Counter for pending tasks
+
+        // Go through each task in the list
+        for (String task : list) {
+            if (task.contains("[X]")) { // Check if the task is marked as completed
+                completedTasks++;
+            } else { // If not completed, it's pending
+                pendingTasks++;
+            }
+        }
+
+        // Display the analytics in a human-friendly format
+        System.out.println("\n=== Analytics Dashboard ===");
+        System.out.println("Total Tasks: " + totalTasks);
+        System.out.println("Completed Tasks: " + completedTasks);
+        System.out.println("Pending Tasks: " + pendingTasks);
+
+        // Avoid division by zero if there are no tasks
+        if (totalTasks > 0) {
+            double completionRate = (completedTasks / (double) totalTasks) * 100;
+            System.out.printf("Completion Rate: %.2f%%\n", completionRate);
+        } else {
+            System.out.println("Completion Rate: N/A (No tasks available)");
+        }
+    }
+
+    public static void main(String[] args) {
+        // Example list of tasks
+        ArrayList<String> list = new ArrayList<>();
+        list.add("[X] Finish Assignment - Complete the Java programming assignment - 2024-10-15 - Homework - High");
+        list.add("[ ] Grocery Shopping - Buy groceries for the week - 2024-10-16 - Personal - Medium");
+        list.add("[X] Submit Report - Weekly progress report submission - 2024-10-17 - Work - Low");
+        list.add("[ ] Prepare Presentation - Prepare slides for the meeting - 2024-10-18 - Work - High");
+
+        // Show the analytics
+        showAnalytics(list);
+    }
+}
