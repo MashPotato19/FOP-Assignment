@@ -268,6 +268,20 @@ class TaskCreation {
             System.out.println("Unexpected error: " + e.getMessage());
         }
     }
+    
+    // View Task (2)
+    public void viewTasks() {
+        if (tasks.isEmpty()) {
+            System.out.println("\nNo tasks available.");
+            return;
+        }
+
+        System.out.println("\n=== List of Tasks ===");
+        for (Task task : tasks) {
+            System.out.println(task);
+            System.out.println("-------------------");
+        }
+    }
 
     // Task Management (3) - Mark task as complete
     public void markTaskAsComplete(Scanner scanner) {
@@ -386,7 +400,6 @@ class TaskCreation {
                         "\nDescription: " + task.getDescription());
             }
         }
-
         if (!found) {
             System.out.println("No tasks match the search keyword.");
         }
@@ -597,20 +610,6 @@ class TaskCreation {
         // Display task categories and their counts
         for (Map.Entry<String, Integer> entry : categoryCounts.entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue());
-        }
-    }
-
-    // View Task (2)
-    public void viewTasks() {
-        if (tasks.isEmpty()) {
-            System.out.println("\nNo tasks available.");
-            return;
-        }
-
-        System.out.println("\n=== List of Tasks ===");
-        for (Task task : tasks) {
-            System.out.println(task);
-            System.out.println("-------------------");
         }
     }
 
