@@ -1,5 +1,6 @@
 package todolist;
 import java.util.*;
+
 public class TodoList {
 
     public static void selectionSort(ArrayList<String> list, String sortBy, boolean ascending) {
@@ -33,7 +34,7 @@ public class TodoList {
         if(sortBy.equals("level")) {
             int priority1 = getPriorityValue(value1);
             int priority2 = getPriorityValue(value2);
-            comparison = priority1.compareTo(priority2);
+            comparison = Integer.compare(priority1, priority2);
         } else {
             comparison = value1.compareTo(value2);
         }
@@ -48,7 +49,18 @@ public class TodoList {
                 return 2;
             case "low" :
                 return 1;
+            default:
+                return 0; // Default case for invalid priority
         }
+    }
+
+    public static String searchTask(ArrayList<String> list, String title) {
+        for (String task : list) {
+            if (task.contains(title)) {
+                return task; // Return the found task
+            }
+        }
+        return "Task not found."; // Return message if not found
     }
 
     public static void main(String[] args) {
@@ -172,7 +184,10 @@ public class TodoList {
             }
 
         else if(option.equals("5")){
-            
+            System.out.println("Enter the title of the task to search: ");
+                String titleToSearch = input.nextLine();
+                String result = searchTask(list, titleToSearch);
+                System.out.println(result);
         }
 
         else if(option.equals("6")){
@@ -195,3 +210,4 @@ public class TodoList {
         input.close();
     }
 }
+
