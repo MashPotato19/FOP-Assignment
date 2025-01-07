@@ -138,21 +138,21 @@ public class Todo {
     }
 
     private void selectionSort(ArrayList<String> list, String sortBy, boolean ascending) {
-        int n = list.size();
+        int n = tasks.size();
 
         for (int i = 0; i < n - 1; i++) {
             int selectedIndex = i;
 
             for (int j = i + 1; j < n; j++) {
-                if (compareTasks(list.get(j), list.get(selectedIndex), sortBy, ascending)) {
+                if (compareTasks(tasks.get(j), tasks.get(selectedIndex), sortBy, ascending)) {
                     selectedIndex = j;
                 }
             }
 
             if (selectedIndex != i) {
-                String temp = list.get(i);
-                list.set(i, list.get(selectedIndex));
-                list.set(selectedIndex, temp);
+                String temp = tasks.get(i);
+                tasks.set(i, tasks.get(selectedIndex));
+                tasks.set(selectedIndex, temp);
             }
         }
     }
