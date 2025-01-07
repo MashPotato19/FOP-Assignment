@@ -185,6 +185,7 @@ class TaskCreation {
             System.out.println("8. Set Task Dependency");
             System.out.println("9. Edit Task");
             System.out.println("10. View Analytics Dashboard");
+            System.out.println("11. Send Reminders for Tasks Due Tomorrow");
             System.out.println("0. Exit");
             System.out.print("Choose An Option: ");
             option = scanner.nextLine();
@@ -220,6 +221,10 @@ class TaskCreation {
                 case "10":
                     viewAnalyticsDashboard();
                     break;
+                case "11":
+                    sendRemindersForTasksDueTomorrow(senderEmail, senderPassword, receiverEmail, todo);
+                    break;
+
                 case "0":
                     System.out.println("Exiting Program");
                     break;
