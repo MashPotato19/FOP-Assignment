@@ -172,6 +172,18 @@ class TaskCreation {
     public void runMenu() {
         Scanner scanner = new Scanner(System.in);
         String option;
+        // User inputs for email configuration
+        System.out.print("Enter your email address: ");
+        String senderEmail = scanner.nextLine();
+        System.out.print("Enter your email password: ");
+        String senderPassword = scanner.nextLine();
+
+        System.out.print("Enter recipient email address: ");
+        String recipientEmail = scanner.nextLine();
+
+        // Create a Todo instance (connected to the database)
+        Todo todo = new Todo();
+
 
         do {
             System.out.println("\n=== To-Do List Menu ===");
