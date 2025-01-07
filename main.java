@@ -137,7 +137,7 @@ public class main {
                     break;
 
                 case "10":
-                    
+                    viewAnalyticsDashboard();
 
                 case "11":
                     sendReminder(senderEmail, senderPassword, todo);
