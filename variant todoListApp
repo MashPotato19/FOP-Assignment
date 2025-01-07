@@ -222,7 +222,7 @@ class TaskCreation {
                     viewAnalyticsDashboard();
                     break;
                 case "11":
-                    sendRemindersForTasksDueTomorrow(senderEmail, senderPassword, receiverEmail, todo);
+                   sendReminderForTasksDueIn24Hours(senderEmail, senderPassword, recipientEmail, todo);
                     break;
 
                 case "0":
@@ -627,6 +627,70 @@ class TaskCreation {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
     }
+
+//Email Notification System (11)
+ public static void sendReminderForTasksDueIn24Hours(String senderEmail, String senderPassword, String recipientEmail, Todo todo) {
+        // Fetch updated tasks
+        todo.fetchTasks();
+
+        // Calculate the current time and 24-hour window
+        Calendar calendar = Calendar.getInstance();
+        Date now = calendar.getTime();
+        calendar.add(Calendar.DAY_OF_YEAR, 1);
+        Date within24Hours = calendar.getTime();
+
+        // Prepare the email message
+        StringBuilder emailMessage = new StringBuilder("=== Email Notification ===\n\nTasks due in the next 24 hours:\n\n");
+        boolean hasTasks = false;
+
+        for (String task : todo.tasks) {
+            String[] taskParts = task.split(" - ");
+            if (taskParts.length < 3) {
+                System.err.println("Invalid task format: " + task);
+                continue;
+            }
+
+            if (isTaskDueWithin24Hours(taskParts[2], now, within24Hours)) {
+                hasTasks = true;
+                emailMessage.append("- ").append(taskParts[1]).append(": ").append(taskParts[2]).append("\n");
+            }
+        }
+
+        if (hasTasks) {
+            // Send email using EmailNotiSystem
+            EmailNotiSystem.sendEmail(
+                senderEmail,
+                senderPassword,
+                "Task Reminder: Tasks Due in 24 Hours",
+                emailMessage.toString(),
+                recipientEmail
+            );
+            System.out.println("Reminder email sent successfully.");
+        } else {
+            System.out.println("No tasks are due in the next 24 hours.");
+        }
+    }
+
+    /**
+     *  method to determine if a task is due within 24 hours.
+     *
+     * @param taskDueDate    the due date of the task in "yyyy-MM-dd HH:mm:ss" format
+     * @param now            the current date and time
+     * @param within24Hours  the date and time 24 hours from now
+     * @return true if the task is due within the next 24 hours, false otherwise
+     */
+    private static boolean isTaskDueWithin24Hours(String taskDueDate, Date now, Date within24Hours) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date taskDate = sdf.parse(taskDueDate);
+            return taskDate.after(now) && taskDate.before(within24Hours);
+        } catch (ParseException e) {
+            System.err.println("Invalid date format for task: " + taskDueDate);
+            return false;
+        }
+    }
+}}
+
 
     private Task findTaskById(int taskId) {
         for (Task task : tasks) {
