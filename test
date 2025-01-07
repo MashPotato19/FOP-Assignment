@@ -1,1 +1,110 @@
+class TaskCreation {
+    private Todo todo;
+    private int nextId = 1; // Placeholder; actual ID will be fetched from the database.
+
+    public TaskCreation() {
+        todo = new Todo();
+    }
+
+    public static void main(String[] args) {
+        TaskCreation taskCreation = new TaskCreation();
+        taskCreation.runMenu();
+    }
+
+    // Main Menu
+    public void runMenu() {
+        Scanner scanner = new Scanner(System.in);
+        String option;
+
+        do {
+            System.out.println("\n=== To-Do List Menu ===");
+            System.out.println("1. Create a New Task");
+            System.out.println("2. View All Tasks");
+            System.out.println("3. Mark Task as Complete");
+            System.out.println("4. Delete Task");
+            System.out.println("0. Exit");
+            System.out.print("Choose An Option: ");
+            option = scanner.nextLine();
+
+            switch (option) {
+                case "1":
+                    createTask(scanner);
+                    break;
+                case "2":
+                    viewTasks();
+                    break;
+                case "3":
+                    markTaskAsComplete(scanner);
+                    break;
+                case "4":
+                    deleteTask(scanner);
+                    break;
+                case "0":
+                    System.out.println("Exiting Program");
+                    break;
+                default:
+                    System.out.println("Invalid option. Please enter a valid option.");
+            }
+        } while (!option.equals("0"));
+
+        scanner.close();
+    }
+
+    // Create a New Task
+    public void createTask(Scanner scanner) {
+        try {
+            System.out.println("\n=== Create a New Task ===");
+
+            System.out.print("Enter task title: ");
+            String title = scanner.nextLine();
+
+            System.out.print("Enter task description: ");
+            String description = scanner.nextLine();
+
+            System.out.print("Enter due date (YYYY-MM-DD): ");
+            String dueDate = scanner.nextLine();
+
+            System.out.print("Enter task category: ");
+            String category = scanner.nextLine();
+
+            System.out.print("Enter priority level (Low, Medium, High): ");
+            String priority = scanner.nextLine();
+
+            java.sql.Date sqlDueDate = java.sql.Date.valueOf(dueDate); // Convert to SQL Date
+
+            // Add the task to the database
+            todo.addTask(title, description, sqlDueDate, category, priority);
+
+            System.out.println("Task created successfully!");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Unexpected error: " + e.getMessage());
+        }
+    }
+
+    // View All Tasks
+    public void viewTasks() {
+        System.out.println("\n=== List of Tasks ===");
+        todo.viewTasks();
+    }
+
+    // Mark Task as Complete
+    public void markTaskAsComplete(Scanner scanner) {
+        System.out.println("\n=== Mark Task as Complete ===");
+        System.out.print("Enter the task title: ");
+        String title = scanner.nextLine();
+
+        todo.completeTask(title);
+    }
+
+    // Delete Task
+    public void deleteTask(Scanner scanner) {
+        System.out.println("\n=== Delete a Task ===");
+        System.out.print("Enter the task ID: ");
+        int taskId = Integer.parseInt(scanner.nextLine());
+
+        todo.deleteTask(taskId);
+    }
+}
 
