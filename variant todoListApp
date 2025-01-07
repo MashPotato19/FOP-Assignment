@@ -261,6 +261,11 @@ class TaskCreation {
             Task newTask = new Task(nextId++, title, description, dueDate, status, category, priority, dependentTaskId, null);
             tasks.add(newTask);
 
+            java.sql.Date sqlDueDate = java.sql.Date.valueOf(dueDate); // Convert to SQL Date
+
+            // Add the task to the database
+            todo.addTask(title, description, sqlDueDate, category, priority);
+
             System.out.println("\nTask created successfully!");
         } catch (IllegalArgumentException e) {
             System.out.println("Error: " + e.getMessage());
@@ -278,6 +283,7 @@ class TaskCreation {
 
         System.out.println("\n=== List of Tasks ===");
         for (Task task : tasks) {
+            todo.viewTasks();
             System.out.println(task);
             System.out.println("-------------------");
         }
@@ -288,6 +294,8 @@ class TaskCreation {
         System.out.print("\n=== Mark Task as Complete ===");
         System.out.print("\nEnter the task ID you want to mark as complete: ");
         int taskId = Integer.parseInt(scanner.nextLine());
+
+        todo.completeTask(title);
 
         Task task = findTaskById(taskId); // The method findTaskById is declared below
         if (task != null) {
@@ -316,6 +324,8 @@ class TaskCreation {
             System.out.println("\n=== Delete a Task ===");
             System.out.print("Enter the task ID you want to delete: ");
             int taskId = Integer.parseInt(scanner.nextLine());
+            
+            todo.deleteTask(taskId);
 
             // Find the task by ID
             Task task = findTaskById(taskId);
