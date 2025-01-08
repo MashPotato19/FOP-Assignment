@@ -1,0 +1,145 @@
+package todolistappgui;
+
+//import controller.TaskController;
+import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.stage.Stage;
+
+import java.util.Comparator;
+
+public class TodoListAppGUI extends Application {
+
+    // ObservableList to store tasks
+    private ObservableList<Task> tasks = FXCollections.observableArrayList();
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage primaryStage) {
+        primaryStage.setTitle("Task Manager");
+
+        // UI Elements
+        TextField taskInput = new TextField();
+        taskInput.setPromptText("Enter new task...");
+        taskInput.setMaxWidth(250);
+
+        Button addButton = new Button("Add Task");
+        addButton.setMinWidth(100);
+
+        Button deleteButton = new Button("Delete");
+        Button markCompleteButton = new Button("Mark Complete");
+        Button sortAscButton = new Button("Sort A-Z");
+        Button sortDescButton = new Button("Sort Z-A");
+
+        // Styling buttons
+        deleteButton.setMinWidth(100);
+        markCompleteButton.setMinWidth(100);
+        sortAscButton.setMinWidth(100);
+        sortDescButton.setMinWidth(100);
+
+        ListView<Task> taskListView = new ListView<>(tasks);
+        taskListView.setCellFactory(param -> new ListCell<>() {
+            @Override
+            protected void updateItem(Task task, boolean empty) {
+                super.updateItem(task, empty);
+                if (empty || task == null) {
+                    setText(null);
+                } else {
+                    setText(task.toString());
+                }
+            }
+        });
+
+        // Styling ListView
+        taskListView.setStyle("-fx-font-size: 14px; -fx-background-color: #f9f9f9;");
+
+        // Layout
+        VBox inputSection = new VBox(10, new Label("Add New Task:"), new HBox(10, taskInput, addButton));
+        inputSection.setPadding(new Insets(10));
+        inputSection.setStyle("-fx-background-color: #e8f4f8; -fx-padding: 10px; -fx-border-color: #d0e6ef; -fx-border-radius: 5px; -fx-border-width: 1;");
+
+        VBox taskSection = new VBox(10, new Label("Tasks:"), taskListView);
+        taskSection.setPadding(new Insets(10));
+        taskSection.setStyle("-fx-background-color: #ffffff; -fx-padding: 10px; -fx-border-color: #dcdcdc; -fx-border-radius: 5px; -fx-border-width: 1;");
+
+        HBox actionButtons = new HBox(10, markCompleteButton, deleteButton);
+        actionButtons.setPadding(new Insets(10));
+        actionButtons.setStyle("-fx-background-color: #f7f7f7; -fx-border-color: #e0e0e0; -fx-border-radius: 5px; -fx-border-width: 1;");
+
+        HBox sortButtons = new HBox(10, sortAscButton, sortDescButton);
+        sortButtons.setPadding(new Insets(10));
+        sortButtons.setStyle("-fx-background-color: #f7f7f7; -fx-border-color: #e0e0e0; -fx-border-radius: 5px; -fx-border-width: 1;");
+
+        VBox mainLayout = new VBox(15, inputSection, taskSection, actionButtons, sortButtons);
+        mainLayout.setPadding(new Insets(15));
+
+        // Button Actions
+        addButton.setOnAction(e -> {
+            String taskName = taskInput.getText().trim();
+            if (!taskName.isEmpty()) {
+                tasks.add(new Task(taskName));
+                taskInput.clear();
+            }
+        });
+
+        deleteButton.setOnAction(e -> {
+            Task selectedTask = taskListView.getSelectionModel().getSelectedItem();
+            if (selectedTask != null) {
+                tasks.remove(selectedTask);
+            }
+        });
+
+        markCompleteButton.setOnAction(e -> {
+            Task selectedTask = taskListView.getSelectionModel().getSelectedItem();
+            if (selectedTask != null) {
+                selectedTask.setComplete(true);
+                taskListView.refresh();
+            }
+        });
+
+        sortAscButton.setOnAction(e -> tasks.sort(Comparator.comparing(Task::getName)));
+
+        sortDescButton.setOnAction(e -> tasks.sort(Comparator.comparing(Task::getName).reversed()));
+
+        // Scene
+        Scene scene = new Scene(mainLayout, 450, 500);
+        scene.getStylesheets().add("styles.css"); // Optional for external styles
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    // Task Class
+    public static class Task {
+        private final String name;
+        private boolean isComplete;
+
+        public Task(String name) {
+            this.name = name;
+            this.isComplete = false;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public boolean isComplete() {
+            return isComplete;
+        }
+
+        public void setComplete(boolean complete) {
+            isComplete = complete;
+        }
+
+        @Override
+        public String toString() {
+            return isComplete ? name + " (Complete)" : name;
+        }
+    }
+}
